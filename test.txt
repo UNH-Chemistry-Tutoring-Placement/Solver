@@ -1,0 +1,50 @@
+#Objective Function Format
+#================================
+Objective Function Format: 1
+Description: some free text
+min group size: 6
+max group size: 8
+below min penalty: 5
+above max penalty: 10
+possible choice penalty: 1
+# not currently including an "impossible choice penalty"
+# not currently including balance terms
+#
+#
+#Class Info Format
+#===================
+Class Info Format: 1
+Description: some free text
+Number of lectures: 2
+Name: Mon 8:00-9:00
+Name: Wed 14:10-15:10
+Number of groups: 2
+Name: John Foo
+Time: Thu 13:00-14:00
+Name: Mary Bar
+Time: Tue 8:30-9:30
+#
+#
+#Student Info Format
+#===================
+Student Info Format: 1
+Description: some free text
+Number of students: 2
+Name: Alice Foo
+Email: abc123@wildcats.unh.edu
+Lecture: Mon 8:00-9:00
+Year: 1
+Sex: Male
+Number of good times: 1
+Thu 13:00-14:00
+Number of possible times: 1
+Tue 8:30-9:30
+Name: Bob Bar
+Email: def456@wildcats.unh.edu
+Lecture: Wed 14:10-15:10
+Year: 3
+Sex: Female
+Number of good times: 1
+Thu 13:00-14:00
+Number of possible times: 1
+Tue 8:30-9:30
