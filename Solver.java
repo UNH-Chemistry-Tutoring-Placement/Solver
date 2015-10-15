@@ -61,7 +61,7 @@ public class Solver {
 	public static void main(String[] args){
 		
 		/* Populate initial world state */
-		String filename = "test.txt";
+		String filename = args[0];
 		//String filename = "bigTest";
 		
 		if(localTesting){
