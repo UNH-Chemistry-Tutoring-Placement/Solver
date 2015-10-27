@@ -93,11 +93,8 @@ public class Solver {
 	public static void main(String[] args){
 		
 		/* Populate initial world state */
-<<<<<<< HEAD
 		//String filename = "test.txt";
-=======
 		String filename = args[0];
->>>>>>> 81557274d73c1529569bdbc26829216b1ad13db8
 		//String filename = "bigTest";
 		String filename = "real-students.txt";
 		
