@@ -1,2 +1,2 @@
 #Solver
-This currently works on test.txt, producing a valid output.
+This currently works on 'real-students.txt' iff a timeout is specified. real-students.txt has 94 students with 12 possible study groups. The solver also outputs in "solution format 2".
