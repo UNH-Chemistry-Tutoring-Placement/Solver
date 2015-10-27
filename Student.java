@@ -9,8 +9,7 @@ import java.util.ArrayList;
  */
 public class Student {
 	
-	private String name, email, gender;
-	private int year;
+	private String name, email, year, gender;
 	private Lecture lecture;
 	private ArrayList<Group> goodG, possibleG;
 	private Group assignedGroup;
@@ -26,7 +25,7 @@ public class Student {
 	 * @param gender
 	 * The gender of the student
 	 */
-	public Student(String name, String email, int year, String gender){
+	public Student(String name, String email, String year, String gender){
 		this.name = name;
 		this.email = email;
 		this.year = year;
@@ -144,7 +143,7 @@ public class Student {
 	/**
 	 * @return the year
 	 */
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 

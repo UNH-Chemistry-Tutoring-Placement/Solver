@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This class is responsible for solving the algorithm.
@@ -10,13 +12,23 @@ import java.util.ArrayList;
 public class Solver {
 	
 	private ArrayList<Student> students;
+	private int solutionCost;
 	private FileIO fileIO;
+	private int timeout = 0;
 	private static boolean localTesting = true;
 	
 	/**
 	 * Constructor
 	 */
 	public Solver(){
+		getInfo();
+	}
+	
+	/**
+	 * Constructor
+	 */
+	public Solver(int timeout){
+	    this.timeout = timeout;
 		getInfo();
 	}
 	
@@ -27,8 +39,25 @@ public class Solver {
 				students, 
 				fileIO.getGroupTimes());
 		
+		if(timeout != 0){
+			Thread thread = new Thread(){
+				public void run(){
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						  @Override
+						  public void run() {
+							  dfs.end();
+							  solutionCost = dfs.getSolutionCost();
+						  }
+						}, timeout);
+				}
+		    };
+		    thread.start();
+		}
+	    
 		/* Solve and print the solution */
 		dfs.solve();
+		//System.out.println("Printing!!!!!!!!!!");
 		printStudentSolution(dfs.getSolution());
 	}
 	
@@ -47,22 +76,26 @@ public class Solver {
 	 * The studly students assigned to their study groups
 	 */
 	private void printStudentSolution(ArrayList<Student> studs) {
-		System.out.println("Solution Format: 1");
+		System.out.println("Solution Format: 2");
 		System.out.println("Objective Function: " + fileIO.getObjective().getDescription());
 		System.out.println("Class Info: " + fileIO.getClassDesc());
 		System.out.println("Student Info:  " + fileIO.getStudentDesc());
 		System.out.println("Number of students: " + studs.size());
 
 		for(Student s : studs){
-			System.out.println(s.getName() + ": " + s.getGroupAssignment().getTAEmail());
+			System.out.println(s.getName());
+			System.out.println(s.getGroupAssignment().getTime());
+			System.out.println(s.getGroupAssignment().getTAEmail());
 		}
+		System.out.println("# Solution cost: " + solutionCost);
 	}
 
 	public static void main(String[] args){
 		
 		/* Populate initial world state */
-		String filename = "test.txt";
+		//String filename = "test.txt";
 		//String filename = "bigTest";
+		String filename = "real-students.txt";
 		
 		if(localTesting){
 			try {
@@ -72,7 +105,12 @@ public class Solver {
 				e.printStackTrace();
 			}
 		}
-		Solver s = new Solver();
+		Solver s = null;
+		if(args.length != 0){
+			s = new Solver(Integer.parseInt(args[0]));
+		} else{
+			s = new Solver();
+		}
 		s.solve();
 	}
 

@@ -10,11 +10,13 @@ import java.util.ArrayList;
 public class DepthFirstSearch {
 	
 	private Objective objective;
-	private ArrayList<Student> students, bestAssignments;
+	private ArrayList<Student> bestAssignments;
+	private ArrayList<Student> students;
 	private ArrayList<Time> times;
 	private int sSize;
 	private int initialScore;
 	private int maxScore = Integer.MAX_VALUE;
+	private boolean timeout = false;
 	
 	/**
 	 * Constructor for the DepthFirstSearch class
@@ -30,23 +32,8 @@ public class DepthFirstSearch {
 		students = s;
 		times = t;
 		sSize = students.size();
-		initialScore = getInitialScore();
+		initialScore = 0;
 		bestAssignments = new ArrayList<Student>();
-	}
-	
-	/**
-	 * Find the initial score of the search based on the objective function
-	 * @return
-	 * The initial score of the search
-	 */
-	private int getInitialScore() {
-		int groupCount = 0;
-		for(Time t : times){
-			groupCount += t.getGroups().size();
-		}
-		int score = objective.getMinGroupSize() * objective.getMinPenalty();
-		score *= groupCount;
-		return score;
 	}
 
 	/**
@@ -54,7 +41,7 @@ public class DepthFirstSearch {
 	 */
 	public void solve(){
 		if(sSize > 0){
-			//System.out.println("FinalScore: " + solve(0, initialScore));
+			//System.out.println(students);
 			solve(0, initialScore);
 		}
 		else{
@@ -72,10 +59,12 @@ public class DepthFirstSearch {
 	 * @return
 	 */
 	private int solve(int sIndex, int curScore){
-		
+		if(timeout){
+			return maxScore;
+		}
 		if(sIndex == sSize){
+			curScore += updateMinScore();
 			if(curScore <= maxScore){
-				//System.out.println("HEREEE! " + curScore);
 				maxScore = curScore;
 				bestAssignments.clear();
 				for(Student s : students){
@@ -87,31 +76,49 @@ public class DepthFirstSearch {
 		}
 		
 		Student cur = students.get(sIndex);
+		if(cur.getGoodGroups().isEmpty() && cur.getPossibleGroups().isEmpty() ){
+			System.out.println(sIndex);
+		}
 		for(Group g : cur.getGoodGroups()){
 			cur.assignGroup(g);
 			int score = calculateScore(curScore, g, true);
-			//System.out.println(score + ": " + cur + " " + g + " " + curScore);
-			
-			//if(score < maxScore){
+			if(score < maxScore){
 				solve(sIndex+1, score);
-			//}
+			}
+			
 			/* Assigning group g to the student failed. Try another group. */
 			cur.unsetGroup(g);
 		}
 		for(Group g : cur.getPossibleGroups()){
 			cur.assignGroup(g);
 			int score = calculateScore(curScore, g, false);
-			//System.out.println(score + ": " + cur + " " + g + " " + curScore);
-			
-			//if(score < maxScore){
+			if(score < maxScore)
 				solve(sIndex+1, score);
-			//}
+			
 			/* Assigning group g to the student failed. Try another group. */
 			cur.unsetGroup(g);
 		}
 		return maxScore;
 	}
 	
+	/**
+	 * Calculate the minimum penalty when a leaf node is reached. 
+	 * @return The minimum penalty
+	 */
+	private int updateMinScore() {
+		int min = objective.getMinGroupSize();
+		int minPen = objective.getMinPenalty();
+		int score = 0;
+		for(Time t : times){
+			for(Group g : t.getGroups()){
+				if(g.getStudentCount() < min){
+					score += minPen*(min - g.getStudentCount());
+				}
+			}
+		}
+		return score;
+	}
+
 	/**
 	 * Return the solution
 	 * @return
@@ -120,6 +127,16 @@ public class DepthFirstSearch {
 	public ArrayList<Student> getSolution(){
 		return bestAssignments;
 	}
+	
+	/**
+	 * Return the solution cost
+	 * @return
+	 * The solution cost
+	 */
+	public int getSolutionCost(){
+		return maxScore;
+	}
+
 
 	/**
 	 * Calculate the objective score after a group assignment or removal
@@ -134,14 +151,15 @@ public class DepthFirstSearch {
 	private int calculateScore(int curScore, Group g, boolean isGood) {
 		int studentCount = g.getStudentCount();
 		int dScore = 0;
-		if(studentCount <= objective.getMinGroupSize()){
-			dScore -= objective.getMinPenalty();
-		}
-		else if(studentCount > objective.getMaxGroupSize())
+		if(studentCount > objective.getMaxGroupSize())
 			dScore += objective.getMaxPenalty();
 		
 		if(!isGood)
 			dScore += objective.getPosPenalty();
 		return curScore + dScore;
+	}
+
+	public void end() {
+		timeout = true;
 	}
 }

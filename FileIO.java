@@ -142,16 +142,18 @@ public class FileIO {
 			in.nextLine();
 			//Lecture lecture = new Lecture(in.nextLine());
 			in.skip("Year: ");
-			int year = in.nextInt();
-			in.skip("\nSex: ");
+			String year = in.nextLine();
+			in.skip("Sex: ");
 			String gender = in.nextLine();
 
 			Student s = new Student(name, email, year, gender);
+			//System.out.println(name + " " + email + " " + year + " " + gender);
 			//System.out.println(name);
 			students.add(s);
 			
 			in.skip("Number of good times:");
 			int nGTimes = in.nextInt();
+			//System.out.println("numG: " + nGTimes);
 			in.skip("\n");
 			for(int j = 0; j < nGTimes; j++){
 				String time = in.nextLine();
@@ -163,6 +165,7 @@ public class FileIO {
 			
 			in.skip("Number of possible times:");
 			int nPTimes = in.nextInt();
+			//System.out.println("numP: " + nPTimes);
 			in.skip("\n");
 			for(int j = 0; j < nPTimes; j++){
 				//System.out.println("possible: " + j);
