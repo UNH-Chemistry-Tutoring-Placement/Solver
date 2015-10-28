@@ -7,7 +7,7 @@
 public class Group {
 	
 	private String taName, taEmail, time;
-	private int studentCount = 0;
+	private int studentCount = 0, demand = 0;
 	
 	/**
 	 * Constructor for the Group class
@@ -104,5 +104,17 @@ public class Group {
 		sb.append(" with ");
 		sb.append(taName);
 		return sb.toString();
+	}
+
+	public void increaseDemand() {
+		demand++;
+	}
+
+	public void decreaseDemand() {
+		demand--;
+	}
+	
+	public int getDemand(){
+		return demand;
 	}
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 
 /**
@@ -11,7 +12,8 @@ public class DepthFirstSearch {
 	
 	private Objective objective;
 	private ArrayList<Student> bestAssignments;
-	private ArrayList<Student> students;
+	private ArrayList<Student> curAssignments;
+	private PriorityQueue<Student> students;
 	private ArrayList<Time> times;
 	private int sSize;
 	private int initialScore;
@@ -22,18 +24,19 @@ public class DepthFirstSearch {
 	 * Constructor for the DepthFirstSearch class
 	 * @param obj
 	 * The objective function
-	 * @param s
+	 * @param students
 	 * The list of students that need groups
 	 * @param t
 	 * An array list of times, which hold possible study groups
 	 */
-	public DepthFirstSearch(Objective obj, ArrayList<Student> s, ArrayList<Time> t){
+	public DepthFirstSearch(Objective obj, PriorityQueue<Student> students, ArrayList<Time> t){
 		objective = obj;
-		students = s;
+		this.students = students;
 		times = t;
 		sSize = students.size();
 		initialScore = 0;
 		bestAssignments = new ArrayList<Student>();
+		curAssignments = new ArrayList<Student>();
 	}
 
 	/**
@@ -62,12 +65,12 @@ public class DepthFirstSearch {
 		if(timeout){
 			return maxScore;
 		}
-		if(sIndex == sSize){
+		if(students.isEmpty()){
 			curScore += updateMinScore();
 			if(curScore <= maxScore){
 				maxScore = curScore;
 				bestAssignments.clear();
-				for(Student s : students){
+				for(Student s : curAssignments){
 					bestAssignments.add(new Student(s));
 				}
 			}
@@ -75,7 +78,8 @@ public class DepthFirstSearch {
 			return curScore;
 		}
 		
-		Student cur = students.get(sIndex);
+		Student cur = students.poll();
+		curAssignments.add(cur);
 		if(cur.getGoodGroups().isEmpty() && cur.getPossibleGroups().isEmpty() ){
 			System.out.println(sIndex);
 		}
@@ -98,6 +102,9 @@ public class DepthFirstSearch {
 			/* Assigning group g to the student failed. Try another group. */
 			cur.unsetGroup(g);
 		}
+		/* backtrack and add student back into priority queue */
+		curAssignments.remove(cur);
+		students.add(cur);
 		return maxScore;
 	}
 	

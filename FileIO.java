@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /**
@@ -12,7 +13,7 @@ public class FileIO {
 	private Scanner in;
 	private ArrayList<Lecture> lectures;
 	private ArrayList<Time> groupTimes;
-	private ArrayList<Student> students;
+	private PriorityQueue<Student> students;
 	private Objective objective;
 	private String classDesc, studentDesc;
 	
@@ -23,7 +24,7 @@ public class FileIO {
 		in = new Scanner(System.in);
 		lectures = new ArrayList<Lecture>();
 		groupTimes = new ArrayList<Time>();
-		students = new ArrayList<Student>();
+		students = new PriorityQueue<Student>();
 	}
 	
 	/**
@@ -158,8 +159,12 @@ public class FileIO {
 			for(int j = 0; j < nGTimes; j++){
 				String time = in.nextLine();
 				for(Time tm : groupTimes){
-					if(tm.getTime().equals(time))
-						s.addGoodGroups(tm.getGroups());
+					if(tm.getTime().equals(time)){
+						ArrayList<Group> groups = tm.getGroups();
+						s.addGoodGroups(groups);
+						for(Group g : groups)
+							g.increaseDemand();
+					}
 				}
 			}
 			
@@ -172,8 +177,12 @@ public class FileIO {
 				String time = in.nextLine();
 				for(Time tm : groupTimes){
 					//System.out.println(tm.getTime() + " " + time);
-					if(tm.getTime().equals(time))
-						s.addPossibleGroups(tm.getGroups());
+					if(tm.getTime().equals(time)){
+						ArrayList<Group> groups = tm.getGroups();
+						s.addPossibleGroups(groups);
+						for(Group g : groups)
+							g.increaseDemand();
+					}
 				}
 			}
 		}
@@ -191,7 +200,7 @@ public class FileIO {
 	/**
 	 * @return the students
 	 */
-	public ArrayList<Student> getStudents() {
+	public PriorityQueue<Student> getStudents() {
 		return students;
 	}
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Stephen, Michaela
  *
  */
-public class Student {
+public class Student implements Comparable<Student>{
 	
 	private String name, email, year, gender;
 	private Lecture lecture;
@@ -51,6 +51,7 @@ public class Student {
 	public void assignGroup(Group g){
 		assignedGroup = g;
 		g.addStudent();
+		g.decreaseDemand();
 	}
 	
 	/**
@@ -68,6 +69,7 @@ public class Student {
 	public void unsetGroup(Group g){
 		assignedGroup = null;
 		g.removeStudent();
+		g.increaseDemand();
 	}
 	
 	/**
@@ -108,6 +110,7 @@ public class Student {
 	 * @return
 	 */
 	public ArrayList<Group> getGoodGroups(){
+		goodG.sort(new GroupComparator());
 		return goodG;
 	}
 	
@@ -116,6 +119,7 @@ public class Student {
 	 * @return
 	 */
 	public ArrayList<Group> getPossibleGroups(){
+		possibleG.sort(new GroupComparator());
 		return possibleG;
 	}
 	
@@ -156,5 +160,14 @@ public class Student {
 		sb.append("\nEmail: ");
 		sb.append(email);
 		return sb.toString();
+	}
+
+	@Override
+	public int compareTo(Student other) {
+		int val = Integer.compare(this.getGoodGroups().size(), other.getGoodGroups().size());
+		if(val == 0){
+			val = Integer.compare(this.getPossibleGroups().size(), other.getPossibleGroups().size());
+		}
+		return val;
 	}
 }

@@ -1,6 +1,7 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,7 +12,7 @@ import java.util.TimerTask;
  */
 public class Solver {
 	
-	private ArrayList<Student> students;
+	private PriorityQueue<Student> students;
 	private int solutionCost;
 	private FileIO fileIO;
 	private int timeout = 0;
@@ -94,7 +95,6 @@ public class Solver {
 		
 		/* Populate initial world state */
 		//String filename = "test.txt";
-		String filename = args[0];
 		//String filename = "bigTest";
 		String filename = "real-students.txt";
 		
