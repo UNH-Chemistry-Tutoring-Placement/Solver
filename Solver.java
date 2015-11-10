@@ -84,7 +84,7 @@ public class Solver {
 		System.out.println("Number of students: " + studs.size());
 
 		for(Student s : studs){
-			System.out.println(s.getName());
+			System.out.println(s.getEmail());
 			System.out.println(s.getGroupAssignment().getTime());
 			System.out.println(s.getGroupAssignment().getTAEmail());
 		}
