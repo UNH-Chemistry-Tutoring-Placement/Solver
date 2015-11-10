@@ -77,7 +77,7 @@ public class Solver {
 	 * The studly students assigned to their study groups
 	 */
 	private void printStudentSolution(ArrayList<Student> studs) {
-		System.out.println("Solution Format: 2");
+		System.out.println("Solution Format: 3");
 		System.out.println("Objective Function: " + fileIO.getObjective().getDescription());
 		System.out.println("Class Info: " + fileIO.getClassDesc());
 		System.out.println("Student Info:  " + fileIO.getStudentDesc());
@@ -88,7 +88,7 @@ public class Solver {
 			System.out.println(s.getGroupAssignment().getTime());
 			System.out.println(s.getGroupAssignment().getTAEmail());
 		}
-		System.out.println("# Solution cost: " + solutionCost);
+		System.out.println("Solution cost: " + solutionCost);
 	}
 
 	public static void main(String[] args){
