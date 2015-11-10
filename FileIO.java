@@ -74,7 +74,14 @@ public class FileIO {
 		int maxPen = in.nextInt();
 		in.skip("\npossible choice penalty:");
 		int posPen = in.nextInt();
+		in.skip("\ndiff lecture penalty:");
+		int diffLec = in.nextInt();
+		in.skip("\ngender balance penalty:");
+		int genBal = in.nextInt();
+		in.skip("\nyear balance penalty:");
+		int yearBal = in.nextInt();
 
+		/* TODO, add diffLec genBal and yearBal */
 		objective = new Objective(format, desc, min, max, minPen, maxPen, posPen);
 	}
 	
