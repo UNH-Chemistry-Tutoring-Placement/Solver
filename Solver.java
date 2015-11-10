@@ -35,7 +35,7 @@ public class Solver {
 	
 	public void solve(){
 		/* Create a depth first search instance */
-		DepthFirstSearch dfs = new DepthFirstSearch(
+		ILDS dfs = new ILDS(
 				fileIO.getObjective(), 
 				students, 
 				fileIO.getGroupTimes());
