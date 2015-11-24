@@ -183,11 +183,11 @@ public class ILDS {
 		
 		if(!isGood)
 			dScore += Objective.getPosPenalty();
-		if(g.getStudentCount() == Objective.getPosPenalty()){
+		/*if(g.getStudentCount() == Objective.getPosPenalty()){
 			if(g.getMales() == 1 || g.getFemales() == 1){
 				dScore += Objective.getGenBal();
 			}
-		}
+		}*/
 		
 		return curScore + dScore;
 	}
