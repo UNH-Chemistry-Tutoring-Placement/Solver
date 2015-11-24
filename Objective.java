@@ -5,9 +5,9 @@
  */
 public class Objective {
 	
-	private int format, minGroupSize, maxGroupSize;
-	private int minPenalty, maxPenalty, posPenalty;
-	private String description;
+	private static int format, minGroupSize, maxGroupSize;
+	private static int minPenalty, maxPenalty, posPenalty;
+	private static String description;
 	
 	public Objective(int format, String desc, int min, int max, int minPen,
 			int maxPen, int posPen) {
@@ -23,49 +23,49 @@ public class Objective {
 	/**
 	 * @return the format
 	 */
-	public int getFormat() {
+	public static int getFormat() {
 		return format;
 	}
 
 	/**
 	 * @return the minGroupSize
 	 */
-	public int getMinGroupSize() {
+	public static int getMinGroupSize() {
 		return minGroupSize;
 	}
 
 	/**
 	 * @return the maxGroupSize
 	 */
-	public int getMaxGroupSize() {
+	public static int getMaxGroupSize() {
 		return maxGroupSize;
 	}
 
 	/**
 	 * @return the minPenalty
 	 */
-	public int getMinPenalty() {
+	public static int getMinPenalty() {
 		return minPenalty;
 	}
 
 	/**
 	 * @return the maxPenalty
 	 */
-	public int getMaxPenalty() {
+	public static int getMaxPenalty() {
 		return maxPenalty;
 	}
 
 	/**
 	 * @return the posPenalty
 	 */
-	public int getPosPenalty() {
+	public static int getPosPenalty() {
 		return posPenalty;
 	}
 
 	/**
 	 * @return the description
 	 */
-	public String getDescription() {
+	public static String getDescription() {
 		return description;
 	}
 }

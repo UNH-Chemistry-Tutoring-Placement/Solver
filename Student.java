@@ -164,10 +164,35 @@ public class Student implements Comparable<Student>{
 
 	@Override
 	public int compareTo(Student other) {
-		int val = Integer.compare(this.getGoodGroups().size(), other.getGoodGroups().size());
-		if(val == 0){
-			val = Integer.compare(this.getPossibleGroups().size(), other.getPossibleGroups().size());
+		int sum = 0;
+		int oSum = 0;
+		for(Group g: this.getGoodGroups()){
+			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
+				sum += Objective.getMaxGroupSize() - g.getStudentCount();
+			}
 		}
-		return val;
+		for(Group g: this.getGoodGroups()){
+			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
+				oSum += Objective.getMaxGroupSize() - g.getStudentCount();
+			}
+		}
+		
+		if(sum == 0){
+			for(Group g: this.getPossibleGroups()){
+				if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
+					sum += Objective.getMaxGroupSize() - g.getStudentCount();
+				}
+			}
+		}
+		
+		if(oSum == 0){
+			for(Group g: this.getPossibleGroups()){
+				if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
+					oSum += Objective.getMaxGroupSize() - g.getStudentCount();
+				}
+			}
+		}
+
+		return Integer.compare(sum, oSum);
 	}
 }
