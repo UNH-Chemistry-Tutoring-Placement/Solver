@@ -68,6 +68,7 @@ public class Student implements Comparable<Student>{
 	 */
 	public void unsetGroup(Group g){
 		assignedGroup = null;
+		//System.out.println(this.getGender());
 		g.removeStudent(this);
 		g.increaseDemand();
 	}

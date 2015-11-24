@@ -96,7 +96,8 @@ public class Solver {
 		/* Populate initial world state */
 		//String filename = "test.txt";
 		//String filename = "bigTest";
-		String filename = "real-students.txt";
+		//String filename = "real-students.txt";
+		String filename = "complete-input-2";
 		
 		if(localTesting){
 			try {

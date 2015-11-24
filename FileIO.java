@@ -74,15 +74,13 @@ public class FileIO {
 		int maxPen = in.nextInt();
 		in.skip("\npossible choice penalty:");
 		int posPen = in.nextInt();
-		in.skip("\ndiff lecture penalty:");
+		in.skip("\ndiff professor penalty:");
 		int diffLec = in.nextInt();
-		in.skip("\ngender balance penalty:");
+		in.skip("\ngender solo penalty:");
 		int genBal = in.nextInt();
-		in.skip("\nyear balance penalty:");
-		int yearBal = in.nextInt();
 
 		/* TODO, add diffLec genBal and yearBal */
-		objective = new Objective(format, desc, min, max, minPen, maxPen, posPen, diffLec, genBal, yearBal);
+		objective = new Objective(format, desc, min, max, minPen, maxPen, posPen, diffLec, genBal);
 	}
 	
 	/**
@@ -95,7 +93,7 @@ public class FileIO {
 		in.skip("\nDescription: ");
 		classDesc = in.nextLine();
 		
-		in.skip("Number of lectures:");
+		in.skip("Number of professors:");
 		int numLectures = in.nextInt();
 		in.skip("\n");
 		for(int i = 0; i < numLectures; i++){
@@ -146,7 +144,7 @@ public class FileIO {
 			String name = in.nextLine();
 			in.skip("Email: ");
 			String email = in.nextLine();
-			in.skip("Lecture: ");
+			in.skip("Professor: ");
 			in.nextLine();
 			//Lecture lecture = new Lecture(in.nextLine());
 			in.skip("Year: ");
