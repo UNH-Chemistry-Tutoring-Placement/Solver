@@ -82,7 +82,7 @@ public class FileIO {
 		int yearBal = in.nextInt();
 
 		/* TODO, add diffLec genBal and yearBal */
-		objective = new Objective(format, desc, min, max, minPen, maxPen, posPen);
+		objective = new Objective(format, desc, min, max, minPen, maxPen, posPen, diffLec, genBal, yearBal);
 	}
 	
 	/**

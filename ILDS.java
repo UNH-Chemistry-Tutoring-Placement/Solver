@@ -178,11 +178,17 @@ public class ILDS {
 	private int calculateScore(int curScore, Group g, boolean isGood) {
 		int studentCount = g.getStudentCount();
 		int dScore = 0;
-		if(studentCount > objective.getMaxGroupSize())
-			dScore += objective.getMaxPenalty();
+		if(studentCount > Objective.getMaxGroupSize())
+			dScore += Objective.getMaxPenalty();
 		
 		if(!isGood)
-			dScore += objective.getPosPenalty();
+			dScore += Objective.getPosPenalty();
+		if(g.getStudentCount() == Objective.getPosPenalty()){
+			if(g.getMales() == 1 || g.getFemales() == 1){
+				dScore += Objective.getGenBal();
+			}
+		}
+		
 		return curScore + dScore;
 	}
 

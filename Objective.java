@@ -7,10 +7,11 @@ public class Objective {
 	
 	private static int format, minGroupSize, maxGroupSize;
 	private static int minPenalty, maxPenalty, posPenalty;
+	private static int diffLec, genBal, yearBal;
 	private static String description;
 	
 	public Objective(int format, String desc, int min, int max, int minPen,
-			int maxPen, int posPen) {
+			int maxPen, int posPen, int diffLec, int genBal, int yearBal) {
 		this.format = format;
 		this.description = desc;
 		this.minGroupSize = min;
@@ -18,6 +19,9 @@ public class Objective {
 		this.minPenalty = minPen;
 		this.maxPenalty = maxPen;
 		this.posPenalty = posPen;
+		this.diffLec = diffLec;
+		this.genBal = genBal;
+		this.yearBal = yearBal;
 	}
 	
 	/**
@@ -67,5 +71,17 @@ public class Objective {
 	 */
 	public static String getDescription() {
 		return description;
+	}
+	
+	public static int getDiffLec(){
+		return diffLec;
+	}
+	
+	public static int getGenBal(){
+		return genBal;
+	}
+	
+	public static int getYearBal(){
+		return yearBal;
 	}
 }

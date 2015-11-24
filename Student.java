@@ -50,7 +50,7 @@ public class Student implements Comparable<Student>{
 	 */
 	public void assignGroup(Group g){
 		assignedGroup = g;
-		g.addStudent();
+		g.addStudent(this);
 		g.decreaseDemand();
 	}
 	
@@ -68,7 +68,7 @@ public class Student implements Comparable<Student>{
 	 */
 	public void unsetGroup(Group g){
 		assignedGroup = null;
-		g.removeStudent();
+		g.removeStudent(this);
 		g.increaseDemand();
 	}
 	

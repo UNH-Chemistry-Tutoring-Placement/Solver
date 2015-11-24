@@ -7,7 +7,7 @@
 public class Group {
 	
 	private String taName, taEmail, time;
-	private int studentCount = 0, demand = 0;
+	private int studentCount = 0, demand = 0, males = 0, females = 0;
 	
 	/**
 	 * Constructor for the Group class
@@ -74,7 +74,13 @@ public class Group {
 	/**
 	 * Add a student to this study group
 	 */
-	public void addStudent(){
+	public void addStudent(Student s){
+		if(s.getGender().equals("Male")){
+			males++;
+		}
+		else if(s.getGender().equals("Female")){
+			females++;
+		}
 		studentCount++;
 			//System.out.println("Add*************************" + studentCount);
 	}
@@ -82,7 +88,13 @@ public class Group {
 	/**
 	 * Remove a student from this study group
 	 */
-	public void removeStudent(){
+	public void removeStudent(Student s){
+		if(s.getGender().equals("Male")){
+			males--;
+		}
+		else if(s.getGender().equals("Female")){
+			females--;
+		}
 		studentCount--;
 	}
 	
@@ -116,5 +128,13 @@ public class Group {
 	
 	public int getDemand(){
 		return demand;
+	}
+	
+	public int getMales(){
+		return males;
+	}
+	
+	public int getFemales(){
+		return females;
 	}
 }
