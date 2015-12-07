@@ -8,7 +8,7 @@ public class Group {
 	
 	private String taName, taEmail, time, professor;
 	private int studentCount = 0, demand = 0, males = 0, females = 0;
-	private boolean profCost = false;
+	private int profCost = 0;
 	
 	/**
 	 * Constructor for the Group class
@@ -149,14 +149,14 @@ public class Group {
 	}
 
 	public void setProfCost() {
-		profCost = true;
+		profCost++;
 	}
 
 	public void unsetProfCost() {
-		profCost = false;
+		profCost--;
 	}
 	
 	public boolean isProfCostSet(){
-		return profCost;
+		return profCost != 0;
 	}
 }

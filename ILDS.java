@@ -72,6 +72,7 @@ public class ILDS {
 		if(students.isEmpty()){
 			curScore += updateMinScore();
 			curScore += updateProfScore();
+			curScore += updateGenderScore();
 			if(curScore <= maxScore){
 				maxScore = curScore;
 				bestAssignments.clear();
@@ -144,6 +145,19 @@ public class ILDS {
 		return maxScore;
 	}
 
+	private int updateGenderScore() {
+		int score = 0;
+		for(Time t : times){
+			for(Group g : t.getGroups()){
+				if(g.getMales() == 1 || g.getFemales() == 1){
+					score += Objective.getGenBal();
+				}
+			}
+		}
+//		System.out.println(score);
+		return score;
+	}
+
 	private int updateProfScore() {
 		int profCost = objective.getDiffLec();
 		int score = 0;
@@ -154,6 +168,7 @@ public class ILDS {
 				}
 			}
 		}
+//		System.out.println(score);
 		return score;
 	}
 
@@ -212,11 +227,11 @@ public class ILDS {
 		
 		if(!isGood)
 			dScore += Objective.getPosPenalty();
-		if(g.getStudentCount() == Objective.getPosPenalty()){
-			if(g.getMales() == 1 || g.getFemales() == 1){
-				dScore += Objective.getGenBal();
-			}
-		}
+//		if(g.getStudentCount() == Objective.getPosPenalty()){
+//			if(g.getMales() == 1 || g.getFemales() == 1){
+//				dScore += Objective.getGenBal();
+//			}
+//		}
 		
 		return curScore + dScore;
 	}
