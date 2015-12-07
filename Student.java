@@ -96,7 +96,16 @@ public class Student implements Comparable<Student>{
 	 * @param g
 	 */
 	public void addGoodGroups(ArrayList<Group> goodGroups){
+//		 if(goodGroups.size() > 1){
+//			 System.out.print(goodG.size());
+//			 System.out.print(" + ");
+//			 System.out.print(goodGroups.size());
+//			 System.out.print(" = ");
+//		 }
 		 goodG.addAll(goodGroups);
+//		 if(goodGroups.size() > 1){
+//			 System.out.println(goodG.size());
+//		 }
 	}
 	
 	/**
@@ -170,35 +179,39 @@ public class Student implements Comparable<Student>{
 
 	@Override
 	public int compareTo(Student other) {
-		int sum = 0;
-		int oSum = 0;
+		int gSum = 0;
+		int pSum = 0;
+		int oGSum = 0;
+		int oPSum = 0;
 		for(Group g: this.getGoodGroups()){
 			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-				sum += Objective.getMaxGroupSize() - g.getStudentCount();
+				gSum += Objective.getMaxGroupSize() - g.getStudentCount();
 			}
 		}
-		for(Group g: this.getGoodGroups()){
+		for(Group g: other.getGoodGroups()){
 			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-				oSum += Objective.getMaxGroupSize() - g.getStudentCount();
+				oGSum += Objective.getMaxGroupSize() - g.getStudentCount();
 			}
 		}
+		for(Group g: this.getPossibleGroups()){
+			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
+				pSum += Objective.getMaxGroupSize() - g.getStudentCount();
+			}
+		}
+		for(Group g: other.getPossibleGroups()){
+			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
+				oPSum += Objective.getMaxGroupSize() - g.getStudentCount();
+			}
+		}
+//		System.out.println(name + " " + sum);
+//		System.out.println(other.getName() + " " + oSum);
 		
-		if(sum == 0){
-			for(Group g: this.getPossibleGroups()){
-				if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-					sum += Objective.getMaxGroupSize() - g.getStudentCount();
-				}
-			}
-		}
-		
-		if(oSum == 0){
-			for(Group g: this.getPossibleGroups()){
-				if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-					oSum += Objective.getMaxGroupSize() - g.getStudentCount();
-				}
-			}
-		}
-
-		return Integer.compare(sum, oSum);
+		if(gSum + pSum != oGSum + oPSum)
+			return Integer.compare(gSum + pSum, oGSum + oPSum);
+		if(gSum == 0)
+			return 1;
+		if(oGSum == 0)
+			return -1;
+		return Integer.compare(gSum, oGSum);
 	}
 }
