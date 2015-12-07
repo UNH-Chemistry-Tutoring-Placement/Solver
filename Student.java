@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Student implements Comparable<Student>{
 	
-	private String name, email, year, gender;
+	private String name, email, year, gender, professor;
 	private Lecture lecture;
 	private ArrayList<Group> goodG, possibleG;
 	private Group assignedGroup;
@@ -25,11 +25,12 @@ public class Student implements Comparable<Student>{
 	 * @param gender
 	 * The gender of the student
 	 */
-	public Student(String name, String email, String year, String gender){
+	public Student(String name, String email, String year, String gender, String professor){
 		this.name = name;
 		this.email = email;
 		this.year = year;
 		this.gender = gender;
+		this.professor = professor;
 		goodG = new ArrayList<Group>();
 		possibleG = new ArrayList<Group>();
 	}
@@ -40,7 +41,7 @@ public class Student implements Comparable<Student>{
 	 * The student to copy
 	 */
 	public Student(Student s){
-		this(s.getName(), s.getEmail(), s.getYear(), s.getGender());
+		this(s.getName(), s.getEmail(), s.getYear(), s.getGender(), s.getProfessor());
 		assignedGroup = s.getGroupAssignment();
 	}
 	
@@ -150,6 +151,10 @@ public class Student implements Comparable<Student>{
 	 */
 	public String getYear() {
 		return year;
+	}
+	
+	public String getProfessor() {
+		return professor;
 	}
 
 	/**

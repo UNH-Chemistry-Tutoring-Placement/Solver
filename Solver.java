@@ -97,7 +97,7 @@ public class Solver {
 		//String filename = "test.txt";
 		//String filename = "bigTest";
 		//String filename = "real-students.txt";
-		String filename = "complete-input-2";
+		String filename = "complete-input-3";
 		
 		if(localTesting){
 			try {

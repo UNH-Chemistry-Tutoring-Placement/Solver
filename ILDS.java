@@ -85,7 +85,7 @@ public class ILDS {
 		Student cur = students.poll();
 		curAssignments.add(cur);
 		if(cur.getGoodGroups().isEmpty() && cur.getPossibleGroups().isEmpty() ){
-			System.out.println(sIndex);
+//			System.out.println(cur);
 		}
 		int choice = 0;
 		for(Group g : cur.getGoodGroups()){
@@ -183,11 +183,11 @@ public class ILDS {
 		
 		if(!isGood)
 			dScore += Objective.getPosPenalty();
-		/*if(g.getStudentCount() == Objective.getPosPenalty()){
+		if(g.getStudentCount() == Objective.getPosPenalty()){
 			if(g.getMales() == 1 || g.getFemales() == 1){
 				dScore += Objective.getGenBal();
 			}
-		}*/
+		}
 		
 		return curScore + dScore;
 	}

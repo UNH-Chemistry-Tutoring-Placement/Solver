@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -16,6 +20,7 @@ public class FileIO {
 	private PriorityQueue<Student> students;
 	private Objective objective;
 	private String classDesc, studentDesc;
+	PrintWriter badStudents;
 	
 	/**
 	 * Constructor
@@ -25,6 +30,15 @@ public class FileIO {
 		lectures = new ArrayList<Lecture>();
 		groupTimes = new ArrayList<Time>();
 		students = new PriorityQueue<Student>();
+		try {
+			badStudents = new PrintWriter("badStudents.txt", "UTF-8");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -36,6 +50,8 @@ public class FileIO {
 		readObjectiveFunction();
 		readClassInfoFormat();
 		readStudentInfoFormat();
+
+		badStudents.close();
 	}
 	
 	/**
@@ -144,18 +160,17 @@ public class FileIO {
 			String name = in.nextLine();
 			in.skip("Email: ");
 			String email = in.nextLine();
-			in.skip("Professor: ");
-			in.nextLine();
+			in.skip("Lecture: ");
+			String professor = in.nextLine();
 			//Lecture lecture = new Lecture(in.nextLine());
 			in.skip("Year: ");
 			String year = in.nextLine();
 			in.skip("Sex: ");
 			String gender = in.nextLine();
 
-			Student s = new Student(name, email, year, gender);
+			Student s = new Student(name, email, year, gender, professor);
 			//System.out.println(name + " " + email + " " + year + " " + gender);
 			//System.out.println(name);
-			students.add(s);
 			
 			in.skip("Number of good times:");
 			int nGTimes = in.nextInt();
@@ -175,7 +190,9 @@ public class FileIO {
 			
 			in.skip("Number of possible times:");
 			int nPTimes = in.nextInt();
-			//System.out.println("numP: " + nPTimes);
+
+//			if(s.getName().equals("Jessica Ohrenberger"))
+//				System.out.println("numP: " + nPTimes);
 			in.skip("\n");
 			for(int j = 0; j < nPTimes; j++){
 				//System.out.println("possible: " + j);
@@ -189,6 +206,11 @@ public class FileIO {
 							g.increaseDemand();
 					}
 				}
+			}
+			if(s.getPossibleGroups().size() == 0 && s.getGoodGroups().size() == 0){
+				badStudents.println(s.getName());
+			} else{
+				students.add(s);
 			}
 		}
 	}
