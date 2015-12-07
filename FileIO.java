@@ -125,6 +125,7 @@ public class FileIO {
 			String taName = in.nextLine();
 			in.skip("Email: ");
 			String taEmail = in.nextLine();
+			System.out.println(taName + " " + taEmail);
 			in.skip("Time: ");
 			String time = in.nextLine();
 			
@@ -160,7 +161,7 @@ public class FileIO {
 			String name = in.nextLine();
 			in.skip("Email: ");
 			String email = in.nextLine();
-			in.skip("Lecture: ");
+			in.skip("Professor: ");
 			String professor = in.nextLine();
 			//Lecture lecture = new Lecture(in.nextLine());
 			in.skip("Year: ");
