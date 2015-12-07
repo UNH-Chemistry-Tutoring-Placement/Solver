@@ -71,6 +71,7 @@ public class ILDS {
 		}
 		if(students.isEmpty()){
 			curScore += updateMinScore();
+			curScore += updateProfScore();
 			if(curScore <= maxScore){
 				maxScore = curScore;
 				bestAssignments.clear();
@@ -89,6 +90,15 @@ public class ILDS {
 		}
 		int choice = 0;
 		for(Group g : cur.getGoodGroups()){
+			boolean setProfessorHere = false;
+			boolean incurredProfessorCost = false;
+			if(g.getProfessor().equals("")){
+				g.setProfessor(cur.getProfessor());
+				setProfessorHere = true;
+			} else if(!g.getProfessor().equals(cur.getProfessor())){
+				incurredProfessorCost = true;
+				g.setProfCost();
+			}
 			cur.assignGroup(g);
 			int score = calculateScore(curScore, g, true);
 			if(score < maxScore){
@@ -101,6 +111,12 @@ public class ILDS {
 			}
 			
 			/* Assigning group g to the student failed. Try another group. */
+			if(setProfessorHere){
+				g.setProfessor("");
+			}
+			if(incurredProfessorCost){
+				g.unsetProfCost();
+			}
 			cur.unsetGroup(g);
 			choice++;
 		}
@@ -127,7 +143,20 @@ public class ILDS {
 		
 		return maxScore;
 	}
-	
+
+	private int updateProfScore() {
+		int profCost = objective.getDiffLec();
+		int score = 0;
+		for(Time t : times){
+			for(Group g : t.getGroups()){
+				if(g.isProfCostSet()){
+					score += profCost;
+				}
+			}
+		}
+		return score;
+	}
+
 	/**
 	 * Calculate the minimum penalty when a leaf node is reached. 
 	 * @return The minimum penalty

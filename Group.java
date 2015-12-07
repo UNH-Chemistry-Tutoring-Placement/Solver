@@ -6,8 +6,9 @@
  */
 public class Group {
 	
-	private String taName, taEmail, time;
+	private String taName, taEmail, time, professor;
 	private int studentCount = 0, demand = 0, males = 0, females = 0;
+	private boolean profCost = false;
 	
 	/**
 	 * Constructor for the Group class
@@ -20,6 +21,7 @@ public class Group {
 		this.taName = taName;
 		this.taEmail = taEmail;
 		this.time = time;
+		this.professor = "";
 	}
 	
 	/**
@@ -136,5 +138,25 @@ public class Group {
 	
 	public int getFemales(){
 		return females;
+	}
+
+	public void setProfessor(String s) {
+		professor = s;
+	}
+
+	public String getProfessor() {
+		return professor;
+	}
+
+	public void setProfCost() {
+		profCost = true;
+	}
+
+	public void unsetProfCost() {
+		profCost = false;
+	}
+	
+	public boolean isProfCostSet(){
+		return profCost;
 	}
 }
