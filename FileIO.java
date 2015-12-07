@@ -125,7 +125,7 @@ public class FileIO {
 			String taName = in.nextLine();
 			in.skip("Email: ");
 			String taEmail = in.nextLine();
-			System.out.println(taName + " " + taEmail);
+//			System.out.println(taName + " " + taEmail);
 			in.skip("Time: ");
 			String time = in.nextLine();
 			
@@ -229,6 +229,15 @@ public class FileIO {
 	 * @return the students
 	 */
 	public PriorityQueue<Student> getStudents() {
+//		while(students.size() != 0){
+//			Student s = students.poll();
+//			System.out.println(s.getName());
+//			for(Group g : s.getGoodGroups()){
+//				int remSlots1 = Objective.getMaxGroupSize() - g.getStudentCount();
+//				int diff = (g.getDemand()/remSlots1);
+//				System.out.println("\t" + g.getTA() + ": " + g.getTime() + " " + diff);
+//			}
+//		}
 		return students;
 	}
 
