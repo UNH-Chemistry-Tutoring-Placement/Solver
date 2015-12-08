@@ -86,56 +86,29 @@ public class ILDS {
 		
 		Student cur = students.poll();
 		curAssignments.add(cur);
-		if(cur.getGoodGroups().isEmpty() && cur.getPossibleGroups().isEmpty() ){
-//			System.out.println(cur);
-		}
+//		if(cur.getGoodGroups().isEmpty() && cur.getPossibleGroups().isEmpty() ){
+////			System.out.println(cur);
+//		}
 		int choice = 0;
-		for(Group g : cur.getGoodGroups()){
-			boolean setProfessorHere = false;
-			boolean incurredProfessorCost = false;
-			if(g.getProfessor().equals("")){
-				g.setProfessor(cur.getProfessor());
-				setProfessorHere = true;
-			} else if(!g.getProfessor().equals(cur.getProfessor())){
-				incurredProfessorCost = true;
-				g.setProfCost();
-			}
-			cur.assignGroup(g);
-			int score = calculateScore(curScore, g, true);
-			if(score < maxScore){
-				if(choice == 0){
-					solve(sIndex+1, score, numDiscs );
-				}
-				else if(numDiscs < discLimit){
-					solve(sIndex+1, score, numDiscs + 1);
-				}
-			}
-			
-			/* Assigning group g to the student failed. Try another group. */
-			if(setProfessorHere){
-				g.setProfessor("");
-			}
-			if(incurredProfessorCost){
-				g.unsetProfCost();
-			}
-			cur.unsetGroup(g);
+		cur.sortGoodGroups();
+		for(Group g : cur.getGoodCompGroups()){
+			setGroup(cur, g, choice, curScore, sIndex, numDiscs, true);
 			choice++;
 		}
-		for(Group g : cur.getPossibleGroups()){
-			cur.assignGroup(g);
-			int score = calculateScore(curScore, g, false);
-			if(score < maxScore)
-			{
-				if(choice == 0){
-					solve(sIndex+1, score, numDiscs );
-				}
-				else if (numDiscs < discLimit){
-					solve(sIndex+1, score, numDiscs + 1);
-				}
-			}
-			
-			/* Assigning group g to the student failed. Try another group. */
-			cur.unsetGroup(g);
+
+		cur.sortPossibleGroups();
+		for(Group g : cur.getPossibleCompGroups()){
+			setGroup(cur, g, choice, curScore, sIndex, numDiscs, false);
+			choice++;
+		}
+		
+		for(Group g : cur.getGoodUncompGroups()){
+			setGroup(cur, g, choice, curScore, sIndex, numDiscs, true);
+			choice++;
+		}
+		
+		for(Group g : cur.getPossibleUncompGroups()){
+			setGroup(cur, g, choice, curScore, sIndex, numDiscs, false);
 			choice++;
 		}
 		/* backtrack and add student back into priority queue */
@@ -144,12 +117,44 @@ public class ILDS {
 		
 		return maxScore;
 	}
+	
+	private void  setGroup(Student cur, Group g, int choice, int curScore, int sIndex, int numDiscs, boolean good){
+		boolean setProfessorHere = false;
+		boolean incurredProfessorCost = false;
+		if(g.getProfessor().equals("")){
+			g.setProfessor(cur.getProfessor());
+			setProfessorHere = true;
+		} else if(!g.getProfessor().equals(cur.getProfessor())){
+			incurredProfessorCost = true;
+			g.setProfCost();
+		}
+		cur.assignGroup(g);
+		int score = calculateScore(curScore, g, good);
+		if(score < maxScore){
+			if(choice == 0){
+				solve(sIndex+1, score, numDiscs );
+			}
+			else if(numDiscs < discLimit){
+				solve(sIndex+1, score, numDiscs + 1);
+			}
+		}
+		
+		/* Assigning group g to the student failed. Try another group. */
+		if(setProfessorHere){
+			g.setProfessor("");
+		}
+		if(incurredProfessorCost){
+			g.unsetProfCost();
+		}
+		cur.unsetGroup(g);
+	}
 
 	private int updateGenderScore() {
 		int score = 0;
 		for(Time t : times){
 			for(Group g : t.getGroups()){
-				if(g.getMales() == 1 || g.getFemales() == 1){
+				if((g.getMales() == 1 && g.getFemales() != 0) 
+						|| (g.getFemales() == 1 && g.getMales() != 0)){
 					score += Objective.getGenBal();
 				}
 			}

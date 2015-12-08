@@ -11,7 +11,7 @@ public class Student implements Comparable<Student>{
 	
 	private String name, email, year, gender, professor;
 	private Lecture lecture;
-	private ArrayList<Group> goodG, possibleG;
+	private ArrayList<Group> goodG, possibleG, compGood, uncompGood, compPos, uncompPos;
 	private Group assignedGroup;
 	
 	/**
@@ -33,6 +33,10 @@ public class Student implements Comparable<Student>{
 		this.professor = professor;
 		goodG = new ArrayList<Group>();
 		possibleG = new ArrayList<Group>();
+		compGood = new ArrayList<Group>();
+		uncompGood = new ArrayList<Group>();
+		compPos = new ArrayList<Group>();
+		uncompPos = new ArrayList<Group>();
 	}
 	
 	/**
@@ -96,16 +100,7 @@ public class Student implements Comparable<Student>{
 	 * @param g
 	 */
 	public void addGoodGroups(ArrayList<Group> goodGroups){
-//		 if(goodGroups.size() > 1){
-//			 System.out.print(goodG.size());
-//			 System.out.print(" + ");
-//			 System.out.print(goodGroups.size());
-//			 System.out.print(" = ");
-//		 }
 		 goodG.addAll(goodGroups);
-//		 if(goodGroups.size() > 1){
-//			 System.out.println(goodG.size());
-//		 }
 	}
 	
 	/**
@@ -121,8 +116,26 @@ public class Student implements Comparable<Student>{
 	 * @return
 	 */
 	public ArrayList<Group> getGoodGroups(){
-		goodG.sort(new GroupComparator());
 		return goodG;
+	}
+	public ArrayList<Group> getGoodCompGroups(){
+		return compGood;
+	}
+	public ArrayList<Group> getGoodUncompGroups(){
+		return uncompGood;
+	}
+
+	public void sortGoodGroups() {
+		goodG.sort(new GroupComparator());
+		compGood.clear();
+		uncompGood.clear();
+		for(Group g : goodG){
+			if(!g.getProfessor().equals("") && !g.getProfessor().equals(professor)){
+				uncompGood.add(g);
+			} else{
+				compGood.add(g);
+			}
+		}
 	}
 	
 	/**
@@ -130,8 +143,26 @@ public class Student implements Comparable<Student>{
 	 * @return
 	 */
 	public ArrayList<Group> getPossibleGroups(){
-		possibleG.sort(new GroupComparator());
 		return possibleG;
+	}
+	public ArrayList<Group> getPossibleCompGroups(){
+		return compPos;
+	}
+	public ArrayList<Group> getPossibleUncompGroups(){
+		return uncompPos;
+	}
+
+	public void sortPossibleGroups() {
+		possibleG.sort(new GroupComparator());
+		compPos.clear();
+		uncompPos.clear();
+		for(Group g : possibleG){
+			if(!g.getProfessor().equals("") && !g.getProfessor().equals(professor)){
+				uncompPos.add(g);
+			} else{
+				compPos.add(g);
+			}
+		}
 	}
 	
 	/**

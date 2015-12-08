@@ -159,6 +159,7 @@ public class FileIO {
 		for(int i = 0; i < numStudents; i++){
 			in.skip("Name: ");
 			String name = in.nextLine();
+//			System.out.println(name);
 			in.skip("Email: ");
 			String email = in.nextLine();
 			in.skip("Professor: ");
