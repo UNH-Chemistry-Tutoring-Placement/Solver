@@ -58,7 +58,6 @@ public class Solver {
 	    
 		/* Solve and print the solution */
 		dfs.solve();
-		//System.out.println("Printing!!!!!!!!!!");
 		printStudentSolution(dfs.getSolution());
 	}
 	
@@ -97,8 +96,7 @@ public class Solver {
 		//String filename = "test.txt";
 		//String filename = "bigTest";
 		//String filename = "real-students.txt";
-//		String filename = "remove_students";
-		String filename = "add_times";
+		String filename = "remove_students";
 		
 		if(localTesting){
 			try {
@@ -110,7 +108,7 @@ public class Solver {
 		}
 		Solver s = null;
 		if(args.length != 0){
-			s = new Solver(Integer.parseInt(args[0]));
+			s = new Solver(Integer.parseInt(args[0]) * 1000);
 		} else{
 			s = new Solver();
 		}
