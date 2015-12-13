@@ -10,24 +10,74 @@ public class Objective {
 	private static int diffLec, genBal;
 	private static String description;
 	
-	public Objective(int format, String desc, int min, int max, int minPen,
-			int maxPen, int posPen, int diffLec, int genBal) {
-		this.format = format;
-		this.description = desc;
-		this.minGroupSize = min;
-		this.maxGroupSize = max;
-		this.minPenalty = minPen;
-		this.maxPenalty = maxPen;
-		this.posPenalty = posPen;
-		this.diffLec = diffLec;
-		this.genBal = genBal;
-	}
-	
 	/**
 	 * @return the format
 	 */
 	public static int getFormat() {
 		return format;
+	}
+
+	/**
+	 * @param format the format to set
+	 */
+	public static void setFormat(int format) {
+		Objective.format = format;
+	}
+
+	/**
+	 * @param minGroupSize the minGroupSize to set
+	 */
+	public static void setMinGroupSize(int minGroupSize) {
+		Objective.minGroupSize = minGroupSize;
+	}
+
+	/**
+	 * @param maxGroupSize the maxGroupSize to set
+	 */
+	public static void setMaxGroupSize(int maxGroupSize) {
+		Objective.maxGroupSize = maxGroupSize;
+	}
+
+	/**
+	 * @param minPenalty the minPenalty to set
+	 */
+	public static void setMinPenalty(int minPenalty) {
+		Objective.minPenalty = minPenalty;
+	}
+
+	/**
+	 * @param maxPenalty the maxPenalty to set
+	 */
+	public static void setMaxPenalty(int maxPenalty) {
+		Objective.maxPenalty = maxPenalty;
+	}
+
+	/**
+	 * @param posPenalty the posPenalty to set
+	 */
+	public static void setPosPenalty(int posPenalty) {
+		Objective.posPenalty = posPenalty;
+	}
+
+	/**
+	 * @param diffLec the diffLec to set
+	 */
+	public static void setDiffLec(int diffLec) {
+		Objective.diffLec = diffLec;
+	}
+
+	/**
+	 * @param genBal the genBal to set
+	 */
+	public static void setGenBal(int genBal) {
+		Objective.genBal = genBal;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public static void setDescription(String description) {
+		Objective.description = description;
 	}
 
 	/**

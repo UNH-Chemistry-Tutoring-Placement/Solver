@@ -84,7 +84,6 @@ public class Group {
 			females++;
 		}
 		studentCount++;
-			//System.out.println("Add*************************" + studentCount);
 	}
 	
 	/**

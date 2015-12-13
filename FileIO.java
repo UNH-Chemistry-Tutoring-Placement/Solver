@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -15,7 +14,6 @@ import java.util.Scanner;
 public class FileIO {
 	
 	private Scanner in;
-	private ArrayList<Lecture> lectures;
 	private ArrayList<Time> groupTimes;
 	private PriorityQueue<Student> students;
 	private Objective objective;
@@ -27,16 +25,13 @@ public class FileIO {
 	 */
 	public FileIO(){
 		in = new Scanner(System.in);
-		lectures = new ArrayList<Lecture>();
 		groupTimes = new ArrayList<Time>();
 		students = new PriorityQueue<Student>();
 		try {
 			badStudents = new PrintWriter("badStudents.txt", "UTF-8");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -78,8 +73,8 @@ public class FileIO {
 	private void readObjectiveFunction(){
 		in.skip("Objective Function Format:");
 		int format = in.nextInt();
-		in.skip("\nDescription: ");		
-		String desc = in.nextLine();
+		in.skip("\nDescription:");		
+		String desc = in.nextLine().trim();
 		in.skip("min group size:");
 		int min = in.nextInt();
 		in.skip("\nmax group size:");
@@ -95,8 +90,15 @@ public class FileIO {
 		in.skip("\ngender solo penalty:");
 		int genBal = in.nextInt();
 
-		/* TODO, add diffLec genBal and yearBal */
-		objective = new Objective(format, desc, min, max, minPen, maxPen, posPen, diffLec, genBal);
+		Objective.setFormat(format);
+		Objective.setDescription(desc);
+		Objective.setMinGroupSize(min);
+		Objective.setMaxGroupSize(max);
+		Objective.setMinPenalty(minPen);
+		Objective.setMaxPenalty(maxPen);
+		Objective.setPosPenalty(posPen);
+		Objective.setDiffLec(diffLec);
+		Objective.setGenBal(genBal);
 	}
 	
 	/**
@@ -106,28 +108,27 @@ public class FileIO {
 		in.skip("\nClass Info Format:");
 		/* Skipping the format for now */
 		in.nextInt();
-		in.skip("\nDescription: ");
-		classDesc = in.nextLine();
+		in.skip("\nDescription:");
+		classDesc = in.nextLine().trim();
 		
 		in.skip("Number of professors:");
 		int numLectures = in.nextInt();
 		in.skip("\n");
 		for(int i = 0; i < numLectures; i++){
-			in.skip("Name: ");
-			lectures.add( new Lecture(in.nextLine()));
+			in.skip("Name:");
+			in.nextLine().trim();
 		}
 		
 		in.skip("Number of groups:");
 		int numGroups = in.nextInt();
 		in.skip("\n");
 		for(int i = 0; i < numGroups; i++){
-			in.skip("Name: ");
-			String taName = in.nextLine();
-			in.skip("Email: ");
-			String taEmail = in.nextLine();
-//			System.out.println(taName + " " + taEmail);
-			in.skip("Time: ");
-			String time = in.nextLine();
+			in.skip("Name:");
+			String taName = in.nextLine().trim();
+			in.skip("Email:");
+			String taEmail = in.nextLine().trim();
+			in.skip("Time:");
+			String time = in.nextLine().trim();
 			
 			Time t = new Time(time);
 			if(!groupTimes.contains(t)){
@@ -150,33 +151,28 @@ public class FileIO {
 		in.skip("Student Info Format:");
 		/* Skipping the format for now */
 		in.nextInt();
-		in.skip("\nDescription: ");
-		studentDesc = in.nextLine();
+		in.skip("\nDescription:");
+		studentDesc = in.nextLine().trim();
 		
 		in.skip("Number of students:");
 		int numStudents = in.nextInt();
 		in.skip("\n");
 		for(int i = 0; i < numStudents; i++){
-			in.skip("Name: ");
-			String name = in.nextLine();
-//			System.out.println(name);
-			in.skip("Email: ");
-			String email = in.nextLine();
-			in.skip("Professor: ");
-			String professor = in.nextLine();
-			//Lecture lecture = new Lecture(in.nextLine());
-			in.skip("Year: ");
-			String year = in.nextLine();
-			in.skip("Sex: ");
-			String gender = in.nextLine();
+			in.skip("Name:");
+			String name = in.nextLine().trim();
+			in.skip("Email:");
+			String email = in.nextLine().trim();
+			in.skip("Professor:");
+			String professor = in.nextLine().trim();
+			in.skip("Year:");
+			String year = in.nextLine().trim();
+			in.skip("Sex:");
+			String gender = in.nextLine().trim();
 
 			Student s = new Student(name, email, year, gender, professor);
-			//System.out.println(name + " " + email + " " + year + " " + gender);
-			//System.out.println(name);
 			
 			in.skip("Number of good times:");
 			int nGTimes = in.nextInt();
-			//System.out.println("numG: " + nGTimes);
 			in.skip("\n");
 			for(int j = 0; j < nGTimes; j++){
 				String time = in.nextLine();
@@ -193,14 +189,10 @@ public class FileIO {
 			in.skip("Number of possible times:");
 			int nPTimes = in.nextInt();
 
-//			if(s.getName().equals("Jessica Ohrenberger"))
-//				System.out.println("numP: " + nPTimes);
 			in.skip("\n");
 			for(int j = 0; j < nPTimes; j++){
-				//System.out.println("possible: " + j);
 				String time = in.nextLine();
 				for(Time tm : groupTimes){
-					//System.out.println(tm.getTime() + " " + time);
 					if(tm.getTime().equals(time)){
 						ArrayList<Group> groups = tm.getGroups();
 						s.addPossibleGroups(groups);
@@ -230,15 +222,6 @@ public class FileIO {
 	 * @return the students
 	 */
 	public PriorityQueue<Student> getStudents() {
-//		while(students.size() != 0){
-//			Student s = students.poll();
-//			System.out.println(s.getName());
-//			for(Group g : s.getGoodGroups()){
-//				int remSlots1 = Objective.getMaxGroupSize() - g.getStudentCount();
-//				int diff = (g.getDemand()/remSlots1);
-//				System.out.println("\t" + g.getTA() + ": " + g.getTime() + " " + diff);
-//			}
-//		}
 		return students;
 	}
 

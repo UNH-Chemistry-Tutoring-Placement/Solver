@@ -10,7 +10,6 @@ import java.util.PriorityQueue;
  */
 public class ILDS {
 	
-	private Objective objective;
 	private ArrayList<Student> bestAssignments;
 	private ArrayList<Student> curAssignments;
 	private PriorityQueue<Student> students;
@@ -30,8 +29,7 @@ public class ILDS {
 	 * @param t
 	 * An array list of times, which hold possible study groups
 	 */
-	public ILDS(Objective obj, PriorityQueue<Student> students, ArrayList<Time> t){
-		objective = obj;
+	public ILDS(PriorityQueue<Student> students, ArrayList<Time> t){
 		this.students = students;
 		times = t;
 		sSize = students.size();
@@ -45,7 +43,6 @@ public class ILDS {
 	 */
 	public void solve(){
 		if(sSize > 0){
-			//System.out.println(students);
 			while(discLimit < sSize){
 				solve(0, initialScore, 0);
 				discLimit++;
@@ -86,9 +83,6 @@ public class ILDS {
 		
 		Student cur = students.poll();
 		curAssignments.add(cur);
-//		if(cur.getGoodGroups().isEmpty() && cur.getPossibleGroups().isEmpty() ){
-////			System.out.println(cur);
-//		}
 		int choice = 0;
 		cur.sortGoodGroups();
 		for(Group g : cur.getGoodCompGroups()){
@@ -159,12 +153,11 @@ public class ILDS {
 				}
 			}
 		}
-//		System.out.println(score);
 		return score;
 	}
 
 	private int updateProfScore() {
-		int profCost = objective.getDiffLec();
+		int profCost = Objective.getDiffLec();
 		int score = 0;
 		for(Time t : times){
 			for(Group g : t.getGroups()){
@@ -173,7 +166,6 @@ public class ILDS {
 				}
 			}
 		}
-//		System.out.println(score);
 		return score;
 	}
 
@@ -182,8 +174,8 @@ public class ILDS {
 	 * @return The minimum penalty
 	 */
 	private int updateMinScore() {
-		int min = objective.getMinGroupSize();
-		int minPen = objective.getMinPenalty();
+		int min = Objective.getMinGroupSize();
+		int minPen = Objective.getMinPenalty();
 		int score = 0;
 		for(Time t : times){
 			for(Group g : t.getGroups()){
@@ -232,11 +224,6 @@ public class ILDS {
 		
 		if(!isGood)
 			dScore += Objective.getPosPenalty();
-//		if(g.getStudentCount() == Objective.getPosPenalty()){
-//			if(g.getMales() == 1 || g.getFemales() == 1){
-//				dScore += Objective.getGenBal();
-//			}
-//		}
 		
 		return curScore + dScore;
 	}

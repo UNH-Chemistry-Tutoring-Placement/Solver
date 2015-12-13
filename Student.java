@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Student implements Comparable<Student>{
 	
 	private String name, email, year, gender, professor;
-	private Lecture lecture;
 	private ArrayList<Group> goodG, possibleG, compGood, uncompGood, compPos, uncompPos;
 	private Group assignedGroup;
 	
@@ -73,7 +72,6 @@ public class Student implements Comparable<Student>{
 	 */
 	public void unsetGroup(Group g){
 		assignedGroup = null;
-		//System.out.println(this.getGender());
 		g.removeStudent(this);
 		g.increaseDemand();
 	}
@@ -84,15 +82,6 @@ public class Student implements Comparable<Student>{
 	 */
 	public Group getGroupAssignment(){
 		return assignedGroup;
-	}
-	
-	/**
-	 * Set the lecture for this student
-	 * @param l
-	 * The lecture to set
-	 */
-	public void setLecture(Lecture l){
-		lecture = l;
 	}
 	
 	/**
@@ -210,32 +199,32 @@ public class Student implements Comparable<Student>{
 
 	@Override
 	public int compareTo(Student other) {
+		int maxGSize = Objective.getMaxGroupSize();
+		
 		int gSum = 0;
 		int pSum = 0;
 		int oGSum = 0;
 		int oPSum = 0;
 		for(Group g: this.getGoodGroups()){
-			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-				gSum += Objective.getMaxGroupSize() - g.getStudentCount();
+			if(maxGSize - g.getStudentCount() > 0){
+				gSum += maxGSize - g.getStudentCount();
 			}
 		}
 		for(Group g: other.getGoodGroups()){
-			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-				oGSum += Objective.getMaxGroupSize() - g.getStudentCount();
+			if(maxGSize - g.getStudentCount() > 0){
+				oGSum += maxGSize - g.getStudentCount();
 			}
 		}
 		for(Group g: this.getPossibleGroups()){
-			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-				pSum += Objective.getMaxGroupSize() - g.getStudentCount();
+			if(maxGSize - g.getStudentCount() > 0){
+				pSum += maxGSize - g.getStudentCount();
 			}
 		}
 		for(Group g: other.getPossibleGroups()){
-			if(Objective.getMaxGroupSize() - g.getStudentCount() > 0){
-				oPSum += Objective.getMaxGroupSize() - g.getStudentCount();
+			if(maxGSize - g.getStudentCount() > 0){
+				oPSum += maxGSize - g.getStudentCount();
 			}
 		}
-//		System.out.println(name + " " + sum);
-//		System.out.println(other.getName() + " " + oSum);
 		
 		if(gSum + pSum != oGSum + oPSum)
 			return Integer.compare(gSum + pSum, oGSum + oPSum);

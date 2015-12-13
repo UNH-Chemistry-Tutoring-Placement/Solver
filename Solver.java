@@ -35,8 +35,7 @@ public class Solver {
 	
 	public void solve(){
 		/* Create a depth first search instance */
-		ILDS dfs = new ILDS(
-				fileIO.getObjective(), 
+		ILDS dfs = new ILDS( 
 				students, 
 				fileIO.getGroupTimes());
 		
@@ -77,7 +76,7 @@ public class Solver {
 	 */
 	private void printStudentSolution(ArrayList<Student> studs) {
 		System.out.println("Solution Format: 3");
-		System.out.println("Objective Function: " + fileIO.getObjective().getDescription());
+		System.out.println("Objective Function: " + Objective.getDescription());
 		System.out.println("Class Info: " + fileIO.getClassDesc());
 		System.out.println("Student Info:  " + fileIO.getStudentDesc());
 		System.out.println("Number of students: " + studs.size());
@@ -97,13 +96,13 @@ public class Solver {
 		//String filename = "bigTest";
 		//String filename = "real-students.txt";
 		String filename = "remove_students";
+//		String filename = "add_times";
 		
 		if(localTesting){
 			try {
 				System.setIn(new FileInputStream(filename));
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
+				
 			}
 		}
 		Solver s = null;
