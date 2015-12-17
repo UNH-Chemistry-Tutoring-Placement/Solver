@@ -1,14 +1,53 @@
 
 /**
- * Group- This class represents a study group
- * @author Stephen, Michaela
+ * Group- This class represents a study group.
+ * @author Stephen Chambers
+ * @author Michaela Tremblay
  *
  */
 public class Group {
+	/**
+	 * The TA information
+	 */
+	private String taName, taEmail;
 	
-	private String taName, taEmail, time, professor;
-	private int studentCount = 0, demand = 0, males = 0, females = 0;
-	private int profCost = 0;
+	/**
+	 * The time the group is at
+	 */
+	private String time;
+	
+	/**
+	 * The groups current professor
+	 */
+	private String professor;
+	
+	/**
+	 * How many students are in the group
+	 */
+	private int studentCount = 0;
+	
+	/**
+	 * How many students want to get in to the group
+	 */
+	private int demand = 0;
+	
+	/**
+	 * The number of males in the group
+	 */
+	private int males = 0;
+	
+	/**
+	 * The number of females in the group
+	 */
+	private int females = 0;
+	
+	/**
+	 * The current number of professor discrepancies.
+	 * For example, if this group was set to professor A,
+	 * and two students in this group were in professor B,
+	 * and one was in professor C, profCost would be set to 3.
+	 */
+	private int profDiscrepancies = 0;
 	
 	/**
 	 * Constructor for the Group class
@@ -75,6 +114,8 @@ public class Group {
 	
 	/**
 	 * Add a student to this study group
+	 * @param s
+	 * The student to add
 	 */
 	public void addStudent(Student s){
 		if(s.getGender().equals("Male")){
@@ -88,6 +129,8 @@ public class Group {
 	
 	/**
 	 * Remove a student from this study group
+	 * @param s 
+	 * The student to remove
 	 */
 	public void removeStudent(Student s){
 		if(s.getGender().equals("Male")){
@@ -119,43 +162,80 @@ public class Group {
 		return sb.toString();
 	}
 
+	/**
+	 * Increase the demand of this group
+	 */
 	public void increaseDemand() {
 		demand++;
 	}
 
+	/**
+	 * Decrease the demand of this group
+	 */
 	public void decreaseDemand() {
 		demand--;
 	}
 	
+	/**
+	 * Get the demand of the group
+	 * @return the demand of the group
+	 */
 	public int getDemand(){
 		return demand;
 	}
 	
+	/**
+	 * Get the number of males in this group
+	 * @return the number of males in this group
+	 */
 	public int getMales(){
 		return males;
 	}
 	
+	/**
+	 * Get the number of females in this group
+	 * @return the number of females in this group
+	 */
 	public int getFemales(){
 		return females;
 	}
 
-	public void setProfessor(String s) {
-		professor = s;
+	/**
+	 * Set the professor for this group
+	 * @param prof
+	 * The new professor
+	 */
+	public void setProfessor(String prof) {
+		professor = prof;
 	}
 
+	/**
+	 * Get the professor for this group
+	 * @return the professor for this group
+	 */
 	public String getProfessor() {
 		return professor;
 	}
 
-	public void setProfCost() {
-		profCost++;
+	/**
+	 * Increase the number of professor discrepancies
+	 */
+	public void incProfDiscrepancies() {
+		profDiscrepancies++;
 	}
 
-	public void unsetProfCost() {
-		profCost--;
+	/**
+	 * Decrease the number of professor discrepancies
+	 */
+	public void decProfDiscrepancies() {
+		profDiscrepancies--;
 	}
 	
-	public boolean isProfCostSet(){
-		return profCost != 0;
+	/**
+	 * Check if this group has professor discrepancies
+	 * @return whether or not this group has professor discrepancies
+	 */
+	public boolean hasProfDiscrepancy(){
+		return profDiscrepancies != 0;
 	}
 }

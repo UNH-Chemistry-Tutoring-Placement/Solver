@@ -3,7 +3,8 @@ import java.util.ArrayList;
 
 /**
  * Time- Holds a time and a list of study groups at that time
- * @author Stephen, Michaela
+ * @author Stephen Chambers
+ * @author Michaela Tremblay
  *
  */
 public class Time {

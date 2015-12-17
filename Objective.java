@@ -1,30 +1,37 @@
 /**
  * Objective- A class holding information related to the objective function
- * @author Stephen, Michaela
+ * @author Stephen Chambers
+ * @author Michaela Tremblay
  *
  */
 public class Objective {
 	
+	/**
+	 * Variable for each cost in the objective function
+	 */
 	private static int format, minGroupSize, maxGroupSize;
 	private static int minPenalty, maxPenalty, posPenalty;
 	private static int diffLec, genBal;
 	private static String description;
 	
 	/**
-	 * @return the format
+	 * Gets the objective format represented by an integer
+	 * @return an integer representing the objective format
 	 */
 	public static int getFormat() {
 		return format;
 	}
 
 	/**
-	 * @param format the format to set
+	 * Sets the objective format
+	 * @param the new objective format
 	 */
 	public static void setFormat(int format) {
 		Objective.format = format;
 	}
 
 	/**
+	 * Set the minimum group size
 	 * @param minGroupSize the minGroupSize to set
 	 */
 	public static void setMinGroupSize(int minGroupSize) {
@@ -32,6 +39,7 @@ public class Objective {
 	}
 
 	/**
+	 * Gets the maximum group size
 	 * @param maxGroupSize the maxGroupSize to set
 	 */
 	public static void setMaxGroupSize(int maxGroupSize) {
@@ -39,6 +47,7 @@ public class Objective {
 	}
 
 	/**
+	 * Gets the minimum group size penalty
 	 * @param minPenalty the minPenalty to set
 	 */
 	public static void setMinPenalty(int minPenalty) {
@@ -46,6 +55,7 @@ public class Objective {
 	}
 
 	/**
+	 * Sets the maximum group size penalty
 	 * @param maxPenalty the maxPenalty to set
 	 */
 	public static void setMaxPenalty(int maxPenalty) {
@@ -53,6 +63,9 @@ public class Objective {
 	}
 
 	/**
+	 * Sets the penalty for if a student is 
+	 * placed in a group that is possible for them
+	 * but not prefered.
 	 * @param posPenalty the posPenalty to set
 	 */
 	public static void setPosPenalty(int posPenalty) {
@@ -60,6 +73,9 @@ public class Objective {
 	}
 
 	/**
+	 * Sets the penalty for a student being
+	 * in a different lecture than the 
+	 * current group
 	 * @param diffLec the diffLec to set
 	 */
 	public static void setDiffLec(int diffLec) {
@@ -67,6 +83,10 @@ public class Objective {
 	}
 
 	/**
+	 * Sets the solo gender penalty. This
+	 * penalty is incurred if one male is
+	 * in a group of all females or vice
+	 * versa
 	 * @param genBal the genBal to set
 	 */
 	public static void setGenBal(int genBal) {
@@ -74,6 +94,7 @@ public class Objective {
 	}
 
 	/**
+	 * Set the description of the obejctive function
 	 * @param description the description to set
 	 */
 	public static void setDescription(String description) {
@@ -81,6 +102,7 @@ public class Objective {
 	}
 
 	/**
+	 * Get the minimum group size
 	 * @return the minGroupSize
 	 */
 	public static int getMinGroupSize() {
@@ -88,6 +110,7 @@ public class Objective {
 	}
 
 	/**
+	 * Get the maximum group size
 	 * @return the maxGroupSize
 	 */
 	public static int getMaxGroupSize() {
@@ -95,6 +118,7 @@ public class Objective {
 	}
 
 	/**
+	 * Get the minimum group size penalty
 	 * @return the minPenalty
 	 */
 	public static int getMinPenalty() {
@@ -102,6 +126,7 @@ public class Objective {
 	}
 
 	/**
+	 * Get the maximum group size penalty
 	 * @return the maxPenalty
 	 */
 	public static int getMaxPenalty() {
@@ -109,6 +134,7 @@ public class Objective {
 	}
 
 	/**
+	 * Get the penalty for being a 'possible' time
 	 * @return the posPenalty
 	 */
 	public static int getPosPenalty() {
@@ -116,16 +142,25 @@ public class Objective {
 	}
 
 	/**
+	 * Get the description of the objective function
 	 * @return the description
 	 */
 	public static String getDescription() {
 		return description;
 	}
 	
+	/**
+	 * Get the different lecture penalty
+	 * @return the different lecture penalty
+	 */
 	public static int getDiffLec(){
 		return diffLec;
 	}
 	
+	/**
+	 * Get the gender balance penalty
+	 * @return the gender balance penalty
+	 */
 	public static int getGenBal(){
 		return genBal;
 	}	

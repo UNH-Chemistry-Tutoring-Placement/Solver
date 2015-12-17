@@ -1,8 +1,17 @@
 import java.util.Comparator;
 
-
+/**
+ * GroupCompartor.java- How the groups get ordered (the value heuristic).
+ * @author Stephen Chambers
+ * @author Michaela Tremblay
+ *
+ */
 public class GroupComparator implements Comparator<Group> {
 
+	/**
+	 * Compute hval for each group and compare the two.
+	 * hval = demand / (remainingSlots in the group)
+	 */
 	@Override
 	public int compare(Group o1, Group o2) {
 		int maxGSize = Objective.getMaxGroupSize();

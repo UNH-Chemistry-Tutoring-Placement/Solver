@@ -8,16 +8,38 @@ import java.util.Scanner;
 /**
  * FileIO- This class fills in the appropriate data structures from the 
  * config file.
- * @author Stephen, Michaela
+ * @author Stephen Chambers
+ * @author Michaela Tremblay
  *
  */
 public class FileIO {
 	
+	/**
+	 * Scanner representing stdin
+	 */
 	private Scanner in;
+	
+	/**
+	 * A list of times, where each time holds a list 
+	 * of groups at that time
+	 */
 	private ArrayList<Time> groupTimes;
+	
+	/**
+	 * A sorted list of students
+	 */
 	private PriorityQueue<Student> students;
-	private Objective objective;
+	
+	/**
+	 * The class and student descriptions
+	 */
 	private String classDesc, studentDesc;
+	
+	/**
+	 * Just in case we found invalid students,
+	 * they are written to a file named
+	 * "badstudents.txt"
+	 */
 	PrintWriter badStudents;
 	
 	/**
@@ -68,7 +90,6 @@ public class FileIO {
 	
 	/**
 	 * Read the objective function 
-	 * note: This is dumb, we should look into a better input format!
 	 */
 	private void readObjectiveFunction(){
 		in.skip("Objective Function Format:");
@@ -212,6 +233,7 @@ public class FileIO {
 	
 	
 	/**
+	 * Gets the group times
 	 * @return the groupTimes
 	 */
 	public ArrayList<Time> getGroupTimes() {
@@ -219,17 +241,11 @@ public class FileIO {
 	}
 
 	/**
+	 * Gets the students
 	 * @return the students
 	 */
 	public PriorityQueue<Student> getStudents() {
 		return students;
-	}
-
-	/**
-	 * @return the objective
-	 */
-	public Objective getObjective() {
-		return objective;
 	}
 
 	/**
@@ -243,6 +259,7 @@ public class FileIO {
 	}
 	
 	/**
+	 * Gets the class description
 	 * @return the classDesc
 	 */
 	public String getClassDesc() {
@@ -250,6 +267,7 @@ public class FileIO {
 	}
 
 	/**
+	 * Gets the student description
 	 * @return the studentDesc
 	 */
 	public String getStudentDesc() {

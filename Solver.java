@@ -7,15 +7,36 @@ import java.util.TimerTask;
 
 /**
  * This class is responsible for solving the algorithm.
- * @author Stephen, Michaela
+ * @author Stephen Chambers
+ * @author Michaela Tremblay
  *
  */
 public class Solver {
 	
+	/**
+	 * A sorted list of students
+	 */
 	private PriorityQueue<Student> students;
+	
+	/**
+	 * The current solution cost
+	 */
 	private int solutionCost;
+	
+	/**
+	 * The FileIO object that reads the input file
+	 * and stores information in data structures.
+	 */
 	private FileIO fileIO;
+	
+	/**
+	 * The timeout for the program
+	 */
 	private int timeout = 0;
+	
+	/**
+	 * Whether or not this program is being tested locally
+	 */
 	private static boolean localTesting = true;
 	
 	/**
@@ -33,6 +54,11 @@ public class Solver {
 		getInfo();
 	}
 	
+	/**
+	 * A method that spawns an ILDS object and calls its solve method. 
+	 * If other algorithms were used, this would be a good place to
+	 * call their solve methods.
+	 */
 	public void solve(){
 		/* Create a depth first search instance */
 		ILDS dfs = new ILDS( 
@@ -89,6 +115,11 @@ public class Solver {
 		System.out.println("Solution cost: " + solutionCost);
 	}
 
+	/**
+	 * The main method. Sets stdin to a file if local testing
+	 * flag is set
+	 * @param args
+	 */
 	public static void main(String[] args){
 		
 		/* Populate initial world state */
@@ -96,7 +127,7 @@ public class Solver {
 		//String filename = "bigTest";
 		//String filename = "real-students.txt";
 		String filename = "remove_students";
-//		String filename = "add_times";
+        //String filename = "add_times";
 		
 		if(localTesting){
 			try {

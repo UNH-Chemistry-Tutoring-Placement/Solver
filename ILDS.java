@@ -3,27 +3,64 @@ import java.util.PriorityQueue;
 
 
 /**
- * DepthFirstSearch- assigns each student to a study group, minimizing
- * the objective function using a depth first search.
- * @author Stephen, Michaela
+ * ILDS- assigns each student to a study group, minimizing
+ * the objective function using improved limited discrepancy search
+ * @author Stephen Chambers
+ * @author Michaela Tremblay
  *
  */
 public class ILDS {
 	
+	/**
+	 * The best assignment so far. This is checked at every leaf.
+	 */
 	private ArrayList<Student> bestAssignments;
+	
+	/**
+	 * The current student assignment
+	 */
 	private ArrayList<Student> curAssignments;
+	
+	/**
+	 * A sorted list of students. Students are sorted by the 
+	 * variable heuristic.
+	 */
 	private PriorityQueue<Student> students;
+	
+	/**
+	 * A list of times, which hold groups at that time
+	 */
 	private ArrayList<Time> times;
+	
+	/**
+	 * The number of students
+	 */
 	private int sSize;
+	
+	/**
+	 * The initial score, calculated by the objective function
+	 */
 	private int initialScore;
+	
+	/**
+	 * The best score so far. This is the value that is checked 
+	 * for the brand-and-bound technique.
+	 */
 	private int maxScore = Integer.MAX_VALUE;
+	
+	/**
+	 * The timeout for this program. A thread will cut the solver off
+	 * after 'timeout' seconds and return the best assignment so far.
+	 */
 	private boolean timeout = false;
+	
+	/**
+	 * The current discrepancy limit, for use in ILDS
+	 */
 	private int discLimit = 0;
 	
 	/**
 	 * Constructor for the DepthFirstSearch class
-	 * @param obj
-	 * The objective function
 	 * @param students
 	 * The list of students that need groups
 	 * @param t
@@ -60,13 +97,27 @@ public class ILDS {
 	 * The index representing the current student trying to be filled in
 	 * @param curScore
 	 * The current score of this descent
+	 * @param numDiscs
+	 * The current number of discrepancies
 	 * @return
 	 */
 	private int solve(int sIndex, int curScore, int numDiscs){
+		/**
+		 * Timeout has been reached, return the best score so far (min cost).
+		 */
 		if(timeout){
 			return maxScore;
 		}
+		/**
+		 * We are at a leaf! Check if the max score and best
+		 * assignment so far need to be updated.
+		 */
 		if(students.isEmpty()){
+			/**
+			 * TODO: Most of the costs are updated at the leaf.
+			 * THerefore, a lower-bounded cost-to-go would utilize
+			 * branch-and-bound much better.
+			 */
 			curScore += updateMinScore();
 			curScore += updateProfScore();
 			curScore += updateGenderScore();
@@ -81,9 +132,19 @@ public class ILDS {
 			return curScore;
 		}
 		
+		/**
+		 * Get the most constrained student
+		 */
 		Student cur = students.poll();
 		curAssignments.add(cur);
 		int choice = 0;
+		
+		/**
+		 * Go through the groups in the following order:
+		 *    Good* Possible* Good Possible
+		 * Where Good* are compatible groups, or groups
+		 * that are in the same group lecture.
+		 */
 		cur.sortGoodGroups();
 		for(Group g : cur.getGoodCompGroups()){
 			setGroup(cur, g, choice, curScore, sIndex, numDiscs, true);
@@ -112,7 +173,25 @@ public class ILDS {
 		return maxScore;
 	}
 	
-	private void  setGroup(Student cur, Group g, int choice, int curScore, int sIndex, int numDiscs, boolean good){
+	/**
+	 * Helper function that basically does all of the work
+	 * @param cur
+	 * The current student being set
+	 * @param g
+	 * The group we are trying to set the student in
+	 * @param choice
+	 * The current choice
+	 * @param curScore
+	 * The current score
+	 * @param sIndex
+	 * The index of this student into the students array
+	 * @param numDiscs
+	 * The current number of discrepancies
+	 * @param good
+	 * Whether or not this is a "good" group
+	 */
+	private void  setGroup(Student cur, Group g, int choice, int curScore, 
+			int sIndex, int numDiscs, boolean good){
 		boolean setProfessorHere = false;
 		boolean incurredProfessorCost = false;
 		if(g.getProfessor().equals("")){
@@ -120,7 +199,7 @@ public class ILDS {
 			setProfessorHere = true;
 		} else if(!g.getProfessor().equals(cur.getProfessor())){
 			incurredProfessorCost = true;
-			g.setProfCost();
+			g.incProfDiscrepancies();
 		}
 		cur.assignGroup(g);
 		int score = calculateScore(curScore, g, good);
@@ -138,11 +217,15 @@ public class ILDS {
 			g.setProfessor("");
 		}
 		if(incurredProfessorCost){
-			g.unsetProfCost();
+			g.decProfDiscrepancies();
 		}
 		cur.unsetGroup(g);
 	}
 
+	/**
+	 * Updates the gender score
+	 * @return the additional gender score that needs to be added
+	 */
 	private int updateGenderScore() {
 		int score = 0;
 		for(Time t : times){
@@ -156,12 +239,16 @@ public class ILDS {
 		return score;
 	}
 
+	/**
+	 * Updates the professor score
+	 * @return the additional professor score that needs to be added
+	 */
 	private int updateProfScore() {
 		int profCost = Objective.getDiffLec();
 		int score = 0;
 		for(Time t : times){
 			for(Group g : t.getGroups()){
-				if(g.isProfCostSet()){
+				if(g.hasProfDiscrepancy()){
 					score += profCost;
 				}
 			}
@@ -228,6 +315,9 @@ public class ILDS {
 		return curScore + dScore;
 	}
 
+	/**
+	 * A method for the timeout thread.
+	 */
 	public void end() {
 		timeout = true;
 	}
