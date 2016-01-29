@@ -73,7 +73,6 @@ public class Solver {
 						  @Override
 						  public void run() {
 							  dfs.end();
-							  solutionCost = dfs.getSolutionCost();
 						  }
 						}, timeout);
 				}
@@ -83,6 +82,7 @@ public class Solver {
 	    
 		/* Solve and print the solution */
 		dfs.solve();
+		solutionCost = dfs.getSolutionCost();
 		printStudentSolution(dfs.getSolution());
 	}
 	
